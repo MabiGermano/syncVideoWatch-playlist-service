@@ -28,6 +28,7 @@ export class CreateRoom1621964134038 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropIndex('room', 'IDX_ROOM_IDENTIFIER')
         await queryRunner.dropTable('room')
     }
 

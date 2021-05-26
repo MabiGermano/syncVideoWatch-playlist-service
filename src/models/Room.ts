@@ -10,6 +10,6 @@ export class Room {
     @Column()
     identifier: string
 
-    @OneToMany(type => User, user => user.room)
+    @OneToMany(() => User, user => user.room)
     users: User[]
 }

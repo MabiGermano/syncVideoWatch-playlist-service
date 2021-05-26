@@ -10,6 +10,6 @@ export class User {
     @Column()
     nickname: string
 
-    @ManyToOne(type => Room, room => room.users)
+    @ManyToOne(() => Room, room => room.users)
     room: Room
 }

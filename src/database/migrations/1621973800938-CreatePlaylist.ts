@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
+import {MigrationInterface, QueryRunner, Table, TableIndex} from "typeorm";
 
-export class CreateUser1621964137863 implements MigrationInterface {
+export class CreatePlaylist1621973800938 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "question",
+            name: 'playlist',
             columns: [
                 {
                     name: 'id',
@@ -13,14 +13,6 @@ export class CreateUser1621964137863 implements MigrationInterface {
                     isPrimary: true,
                     isGenerated: true,
                     generationStrategy: 'increment'
-                },
-                {
-                    name: "nickname",
-                    type: "varchar",
-                },
-                {
-                    name: "room_id",
-                    type: "integer",
                 }
             ],
             foreignKeys: [
@@ -36,16 +28,15 @@ export class CreateUser1621964137863 implements MigrationInterface {
               ]
         }), true)
 
-        await queryRunner.createIndex('user', new TableIndex({
-            name: 'IDX_USER_NICKNAME',
-            columnNames: ['nickname']
+        await queryRunner.createIndex('playlist', new TableIndex({
+            name: 'IDX_PLAYLIST_ID',
+            columnNames: ['id']
         }));
-       
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropIndex('user', 'IDX_USER_NICKNAME')
-        await queryRunner.dropTable('user')
+        await queryRunner.dropIndex('playlist', 'IDX_PLAYLIST_ID')
+        await queryRunner.dropTable('playlist')
     }
 
 }
