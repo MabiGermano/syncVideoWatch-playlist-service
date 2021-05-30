@@ -1,22 +1,22 @@
-import { Request, Response } from "express"
-import { getRepository } from "typeorm"
-import { Room } from "../models/Room"
+import { Request, Response } from 'express'
+import { getRepository } from 'typeorm'
+import { Room } from '../models/Room'
 
-const roomRepository = getRepository(Room)
+// const roomRepository = getRepository(Room)
 
 export const createRoom = async (req: Request, res: Response) => {
 
     const { identifier } = req.body
     const room = { identifier }
 
-    await roomRepository.save(room).catch((err) => {
+    await getRepository(Room).save(room).catch((err) => {
         console.log("Error: ", err)
     })
     return res.status(201).json({ message: 'Room created successfully' })
 }
 
 export const listRoom = async (req: Request, res: Response) => {
-    const list = await roomRepository.find().catch((err) => {
+    const list = await getRepository(Room).find().catch((err) => {
         console.log("Error: ", err)
     })
     return res.json(list)
@@ -24,7 +24,7 @@ export const listRoom = async (req: Request, res: Response) => {
 
 export const deleteRoom = (req: Request, res: Response) => {
     const { id } = req.params
-    roomRepository.delete(id).catch((err) => {
+    getRepository(Room).delete(id).catch((err) => {
         console.log("Error: ", err)
     })
     return res.status(200).json({ message: 'Room deleted succesfully' })

@@ -9,4 +9,4 @@ app.use(cors())
 app.use(express.json())
 app.use(routes)
 
-app.listen('3334', () => console.log("ouvindo a 3334"))
+app.listen('3334', () => console.log('ouvindo 0 3334'))
