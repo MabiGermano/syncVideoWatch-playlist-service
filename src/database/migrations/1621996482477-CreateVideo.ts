@@ -30,7 +30,12 @@ export class CreateVideo1621996482477 implements MigrationInterface {
                 {
                     name:'videoCode',
                     type: 'varchar'
+                }, 
+                {
+                    name:'playlist_id',
+                    type: 'integer'
                 }
+
             ],
             foreignKeys: [
                 {

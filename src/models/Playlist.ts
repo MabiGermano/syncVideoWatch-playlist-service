@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm'
 import { Room } from "./Room"
 import { Video } from "./Video"
 

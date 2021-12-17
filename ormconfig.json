@@ -1,20 +1,15 @@
 {
-    "type": "mysql",
-    "host": "127.0.0.1",
-    "port": 3306,
-    "username": "mabigermano",
-    "password": "BHU*nji9",
-    "database": "sync_video_watch",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-       "./src/models/*.ts"
-    ],
-    "migrations": [
-       "./src/database/migrations/*.ts"
-    ],
-    "cli": {
-       "entitiesDir": "./src/models",
-       "migrationsDir": "./src/database/migrations"
-    }
- }
+   "type": "sqlite",
+   "database": "./src/database/database.sqlite",
+   "migrations": [
+      "./src/database/migrations/*.ts"
+   ],
+   "entities": [
+      "./src/models/*.ts"
+
+   ],
+   "cli": {
+      "entitiesDir": "./src/models",
+      "migrationsDir": "./src/database/migrations"
+   }
+}

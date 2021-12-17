@@ -4,7 +4,8 @@
    "main": "server.js",
    "scripts": {
       "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-      "start": "ts-node src/index.ts"
+      "start": "ts-node src/index.ts",
+      "typeorm": "TS_NODE_PROJECT=tsconfig.ts-node.json TS_NODE_TRANSPILE_ONLY=true ts-node ./node_modules/typeorm/cli.js"
    },
    "repository": "https://github.com/MabiGermano/syncVideoWatch-playlist-service.git",
    "author": "Mabi Germano",
@@ -15,12 +16,16 @@
       "mysql": "^2.18.1",
       "nodemon": "^2.0.7",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.32"
+      "request": "^2.88.2",
+      "typeorm": "0.2.32",
+      "uuid": "^8.3.2"
    },
    "devDependencies": {
       "@types/cors": "^2.8.10",
       "@types/express": "^4.17.11",
       "@types/node": "^8.0.29",
+      "@types/request": "^2.48.7",
+      "sqlite3": "^5.0.2",
       "ts-node": "3.3.0",
       "ts-node-dev": "^1.1.6",
       "typescript": "3.3.3333"

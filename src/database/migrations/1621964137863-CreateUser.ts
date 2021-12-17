@@ -4,7 +4,7 @@ export class CreateUser1621964137863 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "question",
+            name: "user",
             columns: [
                 {
                     name: 'id',
@@ -19,14 +19,14 @@ export class CreateUser1621964137863 implements MigrationInterface {
                     type: "varchar",
                 },
                 {
-                    name: "room_id",
+                    name: "roomId",
                     type: "integer",
                 }
             ],
             foreignKeys: [
                 {
                   name: 'Room',
-                  columnNames: ['room_id'],
+                  columnNames: ['roomId'],
                   referencedTableName: 'room',
                   referencedColumnNames: ['id'],
                   onUpdate: 'CASCADE',
