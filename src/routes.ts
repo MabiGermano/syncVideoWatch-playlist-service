@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express'
-import { createRoom, deleteRoom, listRoom } from './services/RoomService'
+import { deleteRoom, listRoom } from './services/RoomService'
 import { createUser } from './services/UserService'
-import { createVideo } from './services/VideoService'
+import { addNewVideoToPlaylist } from './services/VideoService'
 
 const routes = Router()
 
@@ -18,6 +18,8 @@ routes.post('/user', createUser)
 
 
 // Video's actions
-routes.post('/video', createVideo)
+routes.post('/video/:roomIdentifier', addNewVideoToPlaylist)
+
+
 
 export default routes

@@ -2,17 +2,27 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Room } from "../models/Room";
 import { User } from "../models/User";
+import { initializePlaylist } from "./PlaylistService";
 
 export const createRoom = async (identifier: string) => {
-  const room = { identifier };
-
-  const createdRoom = getRepository(Room).create(room);
+  const room = new Room();
+  room.identifier = identifier;
+  room.playlist = await initializePlaylist();
   await getRepository(Room)
     .save(room)
     .catch((err) => {
       console.log("Error: ", err);
     });
-  return createdRoom;
+  return room;
+};
+
+export const findRoomByIdentifier = async (identifier: string) => {
+  return await getRepository(Room).findOneOrFail({
+    where: {
+      identifier: identifier,
+    },
+    relations: ["playlist", "playlist.videos"],
+  });
 };
 
 export const listRoom = async (req: Request, res: Response) => {

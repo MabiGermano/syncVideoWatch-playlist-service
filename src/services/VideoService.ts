@@ -2,18 +2,32 @@ import { Request, Response } from "express";
 import request from "request";
 import { getRepository } from "typeorm";
 import { Video } from "../models/Video";
+import { findRoomByIdentifier } from "./RoomService";
 
-export const createVideo = async (req: Request, res: Response) => {
-  const { videoUrl, playlistId } = req.body;
-  request
-    .get(`https://www.youtube.com/oembed?url=${videoUrl}&format=json`)
-    .on("response", function (response) {
-      console.log(response.statusCode);
-      console.log(response);
-    });
+export const addNewVideoToPlaylist = async (req: Request, res: Response) => {
+  const { videoUrl } = req.body;
+  const { roomIdentifier } = req.params;
+  const room = await findRoomByIdentifier(roomIdentifier);
+  const video = new Video();
+  const videoCode = videoUrl.match(/([A-Z])\w+/g)[0] 
 
-  return res.status(201).json({ message: "Video created successfully" });
-};
+  console.log("room", room);
+  
+ request.get({
+    url:  `https://www.youtube.com/oembed?url=${videoUrl}&format=json`,
+    json: true,
+    headers: {'User-Agent': 'request'}
+  }, async function(error, response, data) {
+    
+    video.title = data.title;
+    video.thumbnailImage = data.thumbnail_url;
+    video.authorName = data.author_name;
+    video.videoCode = videoCode;
+    video.playlist = room.playlist
+    await getRepository(Video).save(video)
+    
+    return res.status(201).json(video);
+  })};
 
 export const listVideos = async (req: Request, res: Response) => {
   const list = await getRepository(Video)
