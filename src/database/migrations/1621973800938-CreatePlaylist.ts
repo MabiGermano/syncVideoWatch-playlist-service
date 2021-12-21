@@ -13,23 +13,8 @@ export class CreatePlaylist1621973800938 implements MigrationInterface {
             isPrimary: true,
             isGenerated: true,
             generationStrategy: "increment",
-          },
-          {
-            name: "room_id",
-            type: "integer",
-          },
-        ],
-        foreignKeys: [
-          {
-            name: "Room",
-            columnNames: ["room_id"],
-            referencedTableName: "room",
-            referencedColumnNames: ["id"],
-            onUpdate: "CASCADE",
-            onDelete: "CASCADE",
-          },
-        ],
-      }),
+          }
+        ]}),
       true
     );
 

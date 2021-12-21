@@ -19,6 +19,11 @@ export class CreateUser1621964137863 implements MigrationInterface {
                     type: "varchar",
                 },
                 {
+                    name: "roomAdmin",
+                    type: "boolean",
+                    default: false
+                },
+                {
                     name: "roomId",
                     type: "integer",
                 }

@@ -18,7 +18,7 @@ export class CreateRoom1621964134038 implements MigrationInterface {
                     name: 'identifier',
                     type: 'varchar',
                 }
-            ]
+            ],
         }), true)
 
         await queryRunner.createIndex('room', new TableIndex({
