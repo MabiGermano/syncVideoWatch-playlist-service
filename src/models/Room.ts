@@ -11,6 +11,10 @@ export class Room {
     @Column()
     identifier: string
 
+    @OneToOne(() => Playlist)
+    @JoinColumn()
+    playlist:Playlist
+
     @OneToMany(() => User, user => user.room)
     users: User[]
 

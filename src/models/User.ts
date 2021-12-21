@@ -10,6 +10,9 @@ export class User {
     @Column()
     nickname: string
 
+    @Column()
+    roomAdmin:boolean = false
+
     @ManyToOne(() => Room, room => room.users)
     room: Room
 }
