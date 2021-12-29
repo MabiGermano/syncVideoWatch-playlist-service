@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Playlist } from "../models/Playlist";
-import { Room } from "../models/Room";
-import { findRoomByIdentifier } from "./RoomService";
 
 export const initializePlaylist = async () => {
   const playlist = new Playlist();
@@ -16,13 +14,6 @@ export const initializePlaylist = async () => {
 
   return playlist;
 };
-
-// export const findPlaylistByRoom = async (req: Request, res: Response) => {
-//   const { roomIdentifier } = req.params;
-//   const room = await findRoomByIdentifier(roomIdentifier);
-
-//   return res.json(await getRepository(Playlist).findOneOrFail({ room }));
-// };
 
 export const listPlaylists = async (req: Request, res: Response) => {
   const list = await getRepository(Playlist)

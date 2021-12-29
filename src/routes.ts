@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { deleteRoom, listRoom } from './services/RoomService'
-import { createUser } from './services/UserService'
+import { createUser, listUsersByRoom } from './services/UserService'
 import { addNewVideoToPlaylist } from './services/VideoService'
 
 const routes = Router()
@@ -15,6 +15,7 @@ routes.delete('/room/:id', deleteRoom)
 
 // User's actions
 routes.post('/user', createUser)
+routes.get('/users/:roomId', listUsersByRoom)
 
 
 // Video's actions
