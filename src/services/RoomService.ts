@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import request from "request";
 import { getRepository } from "typeorm";
 import { Room } from "../models/Room";
 import { User } from "../models/User";
@@ -16,13 +17,16 @@ export const createRoom = async (identifier: string) => {
   return room;
 };
 
-export const findRoomByIdentifier = async (identifier: string) => {
-  return await getRepository(Room).findOneOrFail({
+export const findRoomByIdentifier = async (req:Request, res: Response) => {
+  const {identifier} = req.params;
+  const room =  await getRepository(Room).findOneOrFail({
     where: {
       identifier: identifier,
     },
-    relations: ["playlist", "playlist.videos"],
+    relations: ["playlist", "playlist.videos", "users"],
   });
+
+  return res.json(room);
 };
 
 export const listRoom = async (req: Request, res: Response) => {
