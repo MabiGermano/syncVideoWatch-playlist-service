@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import request from "request";
+import axios from "axios"
 import { getRepository } from "typeorm";
+import { Room } from "../models/Room";
 import { Video } from "../models/Video";
 import { findRoomByIdentifier } from "./RoomService";
 
@@ -9,25 +11,35 @@ export const addNewVideoToPlaylist = async (req: Request, res: Response) => {
   const { roomIdentifier } = req.params;
   const room = await findRoomByIdentifier(roomIdentifier);
   const video = new Video();
-  const videoCode = videoUrl.match(/([A-Z])\w+/g)[0] 
+  const videoCode = videoUrl.match(/([A-Z])\w+/g)[0];
 
-  console.log("room", room);
-  
- request.get({
-    url:  `https://www.youtube.com/oembed?url=${videoUrl}&format=json`,
+  request.get(
+    {
+      url: `https://www.youtube.com/oembed?url=${videoUrl}&format=json`,
+      json: true,
+      headers: { "User-Agent": "request" },
+    },
+    (_, __, data) => buildAndSaveVideo(data, videoCode, room)
+  );
+};
+
+const buildAndSaveVideo = (dataResponse:any, videoCode:string, room:Room) => {
+  const video = new Video();
+  video.title = dataResponse.title;
+  video.thumbnailImage = dataResponse.thumbnail_url;
+  video.authorName = dataResponse.author_name;
+  video.videoCode = videoCode;
+  room.playlist.videos.push(video);
+  video.playlist = room.playlist;
+  getRepository(Video).save(video);
+
+  request.post({
+    url: "http://192.168.1.9:3333/notify/new-video",
     json: true,
-    headers: {'User-Agent': 'request'}
-  }, async function(error, response, data) {
-    
-    video.title = data.title;
-    video.thumbnailImage = data.thumbnail_url;
-    video.authorName = data.author_name;
-    video.videoCode = videoCode;
-    video.playlist = room.playlist
-    await getRepository(Video).save(video)
-    
-    return res.status(201).json(video);
-  })};
+    headers: { "User-Agent": "request" },
+    body: room
+  })
+};
 
 export const listVideos = async (req: Request, res: Response) => {
   const list = await getRepository(Video)
