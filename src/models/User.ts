@@ -8,6 +8,9 @@ export class User {
     id: number
 
     @Column()
+    identifier: string
+
+    @Column()
     nickname: string
 
     @Column()

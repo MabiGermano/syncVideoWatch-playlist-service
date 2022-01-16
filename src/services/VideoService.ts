@@ -30,14 +30,14 @@ const buildAndSaveVideo = (dataResponse:any, videoCode:string, room:Room) => {
   video.authorName = dataResponse.author_name;
   video.videoCode = videoCode;
   room.playlist.videos.push(video);
-  video.playlist = room.playlist;
+  // video.playlist = room.playlist;
   getRepository(Video).save(video);
 
   request.post({
-    url: "http://192.168.1.9:3333/notify/new-video",
+    url: "http://127.0.0.1:3333/notify/new-video",
     json: true,
     headers: { "User-Agent": "request" },
-    body: room
+    body: {room}
   })
 };
 

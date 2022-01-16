@@ -1,16 +1,21 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { createRoom } from "../services/RoomService";
+import { createRoom, findRoomByIdentifier } from "../services/RoomService";
 import { User } from "../models/User";
 import { v4 as uuidv4 } from "uuid";
+import { Room } from "../models/Room";
 
 export const createUser = async (req: Request, res: Response) => {
-  const { nickname } = req.body;
+  const { nickname, room } = req.body;
   
-  const room = await createRoom(uuidv4());
+  const userRoom = room ? 
+  await findRoomByIdentifier(room.identifier) : 
+  await createRoom(uuidv4());
+  
   const user = new User();
+  user.identifier = uuidv4();
   user.nickname = nickname;
-  user.room = room;
+  user.room = userRoom;
 
   await getRepository(User).save(user);
   console.log("User: ", user);
