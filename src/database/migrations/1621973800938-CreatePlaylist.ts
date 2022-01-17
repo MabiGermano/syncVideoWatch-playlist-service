@@ -13,6 +13,10 @@ export class CreatePlaylist1621973800938 implements MigrationInterface {
             isPrimary: true,
             isGenerated: true,
             generationStrategy: "increment",
+          },
+          {
+            name: "currentPlaying",
+            type: "integer"
           }
         ]}),
       true

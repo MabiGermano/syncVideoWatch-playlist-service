@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, OneToMany, Column } from 'typeorm'
 import { Video } from "./Video"
 
 @Entity()
@@ -8,4 +8,7 @@ export class Playlist {
 
     @OneToMany(() => Video, video => video.playlist)
     videos:Video[]
+
+    @Column()
+    currentPlaying:number
 }

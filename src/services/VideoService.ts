@@ -30,7 +30,7 @@ const buildAndSaveVideo = (dataResponse:any, videoCode:string, room:Room) => {
   video.authorName = dataResponse.author_name;
   video.videoCode = videoCode;
   room.playlist.videos.push(video);
-  // video.playlist = room.playlist;
+  video.playlist = room.playlist;
   getRepository(Video).save(video);
 
   request.post({
