@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { nextVideo, previousVideo } from './services/PlaylistService'
+import { nextVideo, previousVideo, updatePlaylist } from './services/PlaylistService'
 import { deleteRoom, findRoomByIdentifier, findSpecificRoom, listRoom } from './services/RoomService'
 import { createUser, listUsersByRoom } from './services/UserService'
 import { addNewVideoToPlaylist } from './services/VideoService'
@@ -24,6 +24,7 @@ routes.post('/video/:roomIdentifier', addNewVideoToPlaylist)
 
 routes.get('/:roomId/playlist/next-video', nextVideo)
 routes.get('/:roomId/playlist/previous-video', previousVideo)
+routes.put('/:roomId/playlist/', updatePlaylist)
 
 
 export default routes

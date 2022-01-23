@@ -7,7 +7,7 @@ import { findRoomByIdentifier } from "./RoomService";
 export const initializePlaylist = async () => {
   const playlist = new Playlist();
   playlist.videos = new Array();
-  playlist.currentPlaying = 0;
+  playlist.currentPlaying = "";
   await getRepository(Playlist)
     .save(playlist)
     .catch((err) => {
@@ -34,22 +34,38 @@ export const nextVideo = async (req: Request, res: Response) => {
   const { roomId } = req.params;
   const room = await findRoomByIdentifier(roomId);
   const {playlist} = room;
-  if(playlist.videos.length > playlist.currentPlaying + 1)
-    playlist.currentPlaying++
+  let playingIndex = findVideoIndex(playlist.currentPlaying, playlist);
 
+  if (playlist.videos.length > playingIndex + 1)
+    playlist.currentPlaying = playlist.videos[playingIndex+1].videoCode;
+  
   await getRepository(Playlist).save(playlist);
-  return res.json(playlist);
+  return res.json({playlist});
 };
 
 export const previousVideo = async (req: Request, res: Response) => {
   const { roomId } = req.params;
   const room = await findRoomByIdentifier(roomId);
-  const {playlist} = room;
-  if(playlist.currentPlaying - 1 > 0)
-    playlist.currentPlaying--
+  const { playlist } = room;
+  let playingIndex = findVideoIndex(playlist.currentPlaying, playlist);
+
+  if (playlist.videos.length > 0)
+    playlist.currentPlaying = playlist.videos[playingIndex-1].videoCode;
 
   await getRepository(Playlist).save(playlist);
-  return res.json(playlist);
+  return res.json({playlist});
+};
+
+export const updatePlaylist = async (req: Request, res: Response) => {
+  const { roomId } = req.params;
+  const {clientPlaylist} = req.body;
+
+  const room = await findRoomByIdentifier(roomId);
+  const { playlist } = room;
+  playlist.currentPlaying = clientPlaylist.currentPlaying;
+
+  await getRepository(Playlist).save(playlist);
+  return res.json({playlist});
 };
 
 export const listPlaylists = async (req: Request, res: Response) => {
@@ -70,3 +86,10 @@ export const deletePlaylist = (req: Request, res: Response) => {
     });
   return res.status(200).json({ message: "Playlist deleted succesfully" });
 };
+
+const findVideoIndex = (videoCode:string, playlist:Playlist) => {
+
+  return playlist.videos.findIndex(
+    (video) => video.videoCode === videoCode
+  );
+}

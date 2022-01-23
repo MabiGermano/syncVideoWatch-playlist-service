@@ -16,7 +16,7 @@ export class CreatePlaylist1621973800938 implements MigrationInterface {
           },
           {
             name: "currentPlaying",
-            type: "integer"
+            type: "varchar"
           }
         ]}),
       true

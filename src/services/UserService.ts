@@ -8,7 +8,7 @@ import { Room } from "../models/Room";
 export const createUser = async (req: Request, res: Response) => {
   const { nickname, room } = req.body;
   
-  const userRoom = room ? 
+  const userRoom = room.identifier ? 
   await findRoomByIdentifier(room.identifier) : 
   await createRoom(uuidv4());
   

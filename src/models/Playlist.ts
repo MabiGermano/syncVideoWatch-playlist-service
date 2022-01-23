@@ -10,5 +10,5 @@ export class Playlist {
     videos:Video[]
 
     @Column()
-    currentPlaying:number
+    currentPlaying:string
 }
