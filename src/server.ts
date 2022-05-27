@@ -6,7 +6,8 @@ import './database/connection';
 
 const app = express()
 
-app.use(cors({origin: process.env.PLAYER_SERVER}))
+app.use(cors({origin: process.env.CORS_ORIGIN}))
+
 app.use(express.json())
 app.use(routes)
 app.listen('3334', () => console.log('ouvindo 0 3334'))

@@ -6,3 +6,4 @@ tmp/
 temp/
 ormconfig.json
 .env
+src/database/database.sqlite
