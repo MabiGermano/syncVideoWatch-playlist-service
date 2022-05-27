@@ -6,14 +6,11 @@ import { addNewVideoToPlaylist } from './services/VideoService'
 
 const routes = Router()
 
-routes.get('/', (req:Request, res:Response) => {
-    return res.json({ message: 'Oiee' })
-})
-
 // Room's actions
 routes.get('/room', listRoom)
 routes.delete('/room/:id', deleteRoom)
 routes.get('/room/:identifier', findSpecificRoom)
+
 // User's actions
 routes.post('/user', createUser)
 routes.get('/users/:roomId', listUsersByRoom)
@@ -25,6 +22,5 @@ routes.post('/video/:roomIdentifier', addNewVideoToPlaylist)
 routes.get('/:roomId/playlist/next-video', nextVideo)
 routes.get('/:roomId/playlist/previous-video', previousVideo)
 routes.put('/:roomId/playlist/', updatePlaylist)
-
 
 export default routes

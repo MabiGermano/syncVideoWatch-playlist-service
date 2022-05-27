@@ -3,7 +3,6 @@ import { getRepository } from "typeorm";
 import { createRoom, findRoomByIdentifier } from "../services/RoomService";
 import { User } from "../models/User";
 import { v4 as uuidv4 } from "uuid";
-import { Room } from "../models/Room";
 
 export const createUser = async (req: Request, res: Response) => {
   const { nickname, room } = req.body;

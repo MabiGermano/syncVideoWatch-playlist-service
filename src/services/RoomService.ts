@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Room } from "../models/Room";
-import { User } from "../models/User";
 import { initializePlaylist } from "./PlaylistService";
 
 export const createRoom = async (identifier: string) => {

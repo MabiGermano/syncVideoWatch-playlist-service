@@ -6,6 +6,7 @@ import { Video } from "../models/Video";
 import { findRoomByIdentifier } from "./RoomService";
 import { getVideoCode } from "../utils/StringUtils";
 import { Playlist } from "../models/Playlist";
+import * as dotenv from "dotenv";
 
 export const addNewVideoToPlaylist = async (req: Request, res: Response) => {
   const { videoUrl } = req.body;
@@ -39,7 +40,7 @@ const buildAndSaveVideo = (dataResponse:any, videoCode:string, room:Room) => {
   getRepository(Playlist).save(room.playlist);
 
   request.post({
-    url: "http://127.0.0.1:3333/notify/new-video",
+    url: `${process.env.PLAYER_SERVER}/notify/new-video`,
     json: true,
     headers: { "User-Agent": "request" },
     body: {room}

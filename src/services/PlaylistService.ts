@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Playlist } from "../models/Playlist";
-import { Room } from "../models/Room";
 import { findRoomByIdentifier } from "./RoomService";
 
 export const initializePlaylist = async () => {
