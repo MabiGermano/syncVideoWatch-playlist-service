@@ -39,8 +39,10 @@ const buildAndSaveVideo = (dataResponse:any, videoCode:string, room:Room) => {
   getRepository(Video).save(video);
   getRepository(Playlist).save(room.playlist);
 
+  console.log(`${process.env.PLAYER_SERVER_ORIGIN}/notify/new-video`);
+
   request.post({
-    url: `${process.env.PLAYER_SERVER}/notify/new-video`,
+    url: `${process.env.PLAYER_SERVER_ORIGIN}/notify/new-video`,
     json: true,
     headers: { "User-Agent": "request" },
     body: {room}
